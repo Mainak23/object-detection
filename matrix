@@ -307,3 +307,130 @@ Required for face recognition.
 
 mAP50 measures whether the model finds the object at approximately the right location.
 mAP50–95 measures how accurately the box matches the object boundary.
+
+1️⃣ Conservative Model — what it means
+Definition
+
+A conservative model predicts an object only when it is very confident.
+
+Metric pattern
+
+High precision
+
+Lower recall
+
+What it does
+
+Avoids false positives
+
+Skips uncertain objects
+
+In practice
+
+It says “no” unless it is sure
+
+Misses faint, small, or unclear objects
+
+Example
+
+Invoice OCR:
+
+Only detects “Total Amount” when text is clear
+
+Ignores faded or handwritten totals
+
+When you want this
+
+Finance
+
+Legal documents
+
+Compliance systems
+
+Any place where a wrong detection is costly
+
+2️⃣ Aggressive Model — what it means
+Definition
+
+An aggressive model predicts objects even when confidence is low.
+
+Metric pattern
+
+High recall
+
+Lower precision
+
+What it does
+
+Finds almost everything
+
+Produces more false positives
+
+In practice
+
+It says “yes” even if unsure
+
+Over-detects
+
+Example
+
+Surveillance:
+
+Detects people even in shadows
+
+Sometimes flags bags or posters as people
+
+When you want this
+
+Safety systems
+
+Medical screening
+
+Search-and-filter pipelines
+
+Any place where missing is worse than being wrong
+
+3️⃣ What actually makes a model aggressive or conservative
+
+This is important:
+The model architecture is not aggressive or conservative.
+
+It is controlled by thresholds and training bias.
+
+Main controls:
+
+Confidence threshold
+
+High → conservative
+
+Low → aggressive
+
+Training data
+
+Clean, strict labels → conservative
+
+Noisy, diverse labels → aggressive
+
+Loss weighting
+
+Penalize false positives → conservative
+
+Penalize false negatives → aggressive
+
+4️⃣ Visual intuition (simple)
+Conservative:
+[   object   ]   ← only this
+
+Aggressive:
+[ object ] [ maybe ] [ noise ]
+
+5️⃣ Quick decision table
+Requirement	Choose
+False positives are costly	Conservative
+Missing objects is costly	Aggressive
+OCR / Finance	Conservative
+Medical / Safety	Aggressive
+6️⃣ One-line takeaway (memorize this)
+
+Conservative models avoid mistakes but miss some objects.
+Aggressive models find everything but make more mistakes.
